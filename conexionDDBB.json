@@ -1,0 +1,1 @@
+{ "Cliente": "localhost", "Puerto": 27017,"Database": "Biblioteca", "Coleccion1": "books", "Coleccion2": "users" }
