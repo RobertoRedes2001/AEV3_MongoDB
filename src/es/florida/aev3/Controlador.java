@@ -9,6 +9,7 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import es.florida.aev3.Modelo;
 import es.florida.aev3.Vista;
@@ -17,7 +18,7 @@ public class Controlador {
 	private Modelo modelo;
 	private Vista vista;
 	private ActionListener actionListener_CrearRegistre, actionListener_SeleccionarImatge,actionListener_CargarConexio,
-	actionListener_Login;
+	actionListener_Login, actionListener_EsborrarRegistre,actionListener_ActualitzarRegistre,actionListener_EsborrarColeccio;
 	
 	Controlador(Modelo m, Vista v){
 		this.modelo=m;
@@ -49,6 +50,9 @@ public class Controlador {
 					vista.getTxtAnyPub().setEnabled(true);
 					vista.getTxtNumPag().setEnabled(true);
 					vista.getBtnCrear().setEnabled(true);
+					vista.getBtnUpdate().setEnabled(true);
+					vista.getBtnDeleteOne().setEnabled(true);
+					vista.getBtnDeleteAll().setEnabled(true);
 					vista.getBtnImageFile().setEnabled(true);
 				}else {
 					showMessageDialog(null, "Usuari o Contrasenya incorrectes.");
@@ -73,8 +77,49 @@ public class Controlador {
 			public void actionPerformed(ActionEvent e) {
 				File imageFile = new File (vista.getLblRoute().getText());
 				modelo.crearBook(Integer.parseInt(vista.getTxtId().getText()), vista.getTxtTitle().getText(), vista.getTxtAuthor().getText(), Integer.parseInt(vista.getTxtAnyNax().getText()), Integer.parseInt(vista.getTxtAnyPub().getText()), vista.getTxtEditorial().getText(), Integer.parseInt(vista.getTxtNumPag().getText()), imageFile);
+				showMessageDialog(null, "Registre creat.");
 			}
 		};
 		vista.getBtnCrear().addActionListener(actionListener_CrearRegistre);
+		
+		actionListener_ActualitzarRegistre = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null, "Desea actualitzar el registre?", "UPDATE", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(JOptionPane.YES_OPTION==0) {
+					File imageFile = new File (vista.getLblRoute().getText());
+					modelo.actualitzarBook(Integer.parseInt(vista.getTxtId().getText()), vista.getTxtTitle().getText(), vista.getTxtAuthor().getText(), Integer.parseInt(vista.getTxtAnyNax().getText()), Integer.parseInt(vista.getTxtAnyPub().getText()), vista.getTxtEditorial().getText(), Integer.parseInt(vista.getTxtNumPag().getText()), imageFile);
+					showMessageDialog(null, "Registre actualitzat.");
+				}
+			}
+		};
+		vista.getBtnUpdate().addActionListener(actionListener_ActualitzarRegistre);
+		
+		actionListener_EsborrarRegistre = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null, "Desea borrar el registre?", "DELETE", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(JOptionPane.YES_OPTION==0) {
+					modelo.borrarBook(Integer.parseInt(vista.getTxtId().getText()));
+					showMessageDialog(null, "Registre esborrat.");
+				}
+			}
+		};
+		vista.getBtnDeleteOne().addActionListener(actionListener_EsborrarRegistre);
+		
+		actionListener_EsborrarColeccio = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null, "Desea borrar la entera coleccio?", "DELETE ALL", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(JOptionPane.YES_OPTION==0) {
+					JOptionPane.showConfirmDialog(null, "Segur? Estic parlant de la ENTERA coleccio.", "DELETE ALL", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if(JOptionPane.YES_OPTION==0) {
+						JOptionPane.showConfirmDialog(null, "ULTIMA OPORTUNITAT. Estas completament SEGUR?", "DELETE ALL", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+						if(JOptionPane.YES_OPTION==0) {
+							modelo.borrarColeecio();
+							showMessageDialog(null, "Coleccio esborrada.");
+						}	
+					}
+				}
+			}
+		};
+		vista.getBtnDeleteAll().addActionListener(actionListener_EsborrarColeccio);
 	}
 }

@@ -1,5 +1,7 @@
 package es.florida.aev3;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -100,5 +102,25 @@ public class Modelo {
 		coleccionBooks.insertOne(doc);
 	}
 	
+	public static void actualitzarBook(int id, String title, String autor, int any, int nax, String editorial, int pags, File img) {
+		Document doc = new Document();
+		doc.append("Id", id);
+		doc.append("Titulo", title);
+		doc.append("Autor", autor);
+		doc.append("Anyo_nacimiento", nax);
+		doc.append("Anyo_publicacion", any);
+		doc.append("Editorial", editorial);
+		doc.append("Numero_paginas", pags);
+		doc.append("Thumbnail", convertirBase64(img));
+		coleccionBooks.updateOne(eq("Id", id), new Document("$set",
+				new Document(doc)));
+	}
 	
+	public static void borrarBook(int id) {
+		coleccionBooks.deleteOne(eq("Id", id)); 
+	}
+	
+	public static void borrarColeecio() {
+		coleccionBooks.drop(); 
+	}
 }

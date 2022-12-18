@@ -32,6 +32,9 @@ public class Vista extends JFrame {
 	private JTextField txtUser;
 	private JPasswordField psfPassword;
 	private JButton btnLogin;
+	private JButton btnUpdate;
+	private JButton btnDeleteOne;
+	private JButton btnDeleteAll;
 
 	public Vista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,92 +46,92 @@ public class Vista extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblAnyNax = new JLabel("Any de Naiximent:");
-		lblAnyNax.setBounds(506, 240, 103, 20);
+		lblAnyNax.setBounds(506, 206, 103, 20);
 		contentPane.add(lblAnyNax);
 		
 		txtAnyNax = new JTextField();
 		txtAnyNax.setEnabled(false);
-		txtAnyNax.setBounds(619, 240, 86, 20);
+		txtAnyNax.setBounds(619, 206, 86, 20);
 		contentPane.add(txtAnyNax);
 		txtAnyNax.setColumns(10);
 		
 		txtAnyPub = new JTextField();
 		txtAnyPub.setEnabled(false);
 		txtAnyPub.setColumns(10);
-		txtAnyPub.setBounds(619, 269, 86, 20);
+		txtAnyPub.setBounds(619, 235, 86, 20);
 		contentPane.add(txtAnyPub);
 		
 		JLabel lblAnyPub = new JLabel("Any de Publicaci\u00F3:");
-		lblAnyPub.setBounds(506, 269, 103, 20);
+		lblAnyPub.setBounds(506, 235, 103, 20);
 		contentPane.add(lblAnyPub);
 		
 		txtEditorial = new JTextField();
 		txtEditorial.setEnabled(false);
 		txtEditorial.setColumns(10);
-		txtEditorial.setBounds(565, 300, 86, 20);
+		txtEditorial.setBounds(565, 266, 86, 20);
 		contentPane.add(txtEditorial);
 		
 		JLabel lblEditorial = new JLabel("Editorial:");
-		lblEditorial.setBounds(506, 300, 67, 20);
+		lblEditorial.setBounds(506, 266, 67, 20);
 		contentPane.add(lblEditorial);
 		
 		txtAuthor = new JTextField();
 		txtAuthor.setEnabled(false);
 		txtAuthor.setColumns(10);
-		txtAuthor.setBounds(551, 209, 86, 20);
+		txtAuthor.setBounds(551, 175, 86, 20);
 		contentPane.add(txtAuthor);
 		
 		JLabel lblAuthor = new JLabel("Autor:");
-		lblAuthor.setBounds(506, 209, 67, 20);
+		lblAuthor.setBounds(506, 175, 67, 20);
 		contentPane.add(lblAuthor);
 		
 		txtTitle = new JTextField();
 		txtTitle.setEnabled(false);
 		txtTitle.setColumns(10);
-		txtTitle.setBounds(541, 178, 86, 20);
+		txtTitle.setBounds(541, 144, 86, 20);
 		contentPane.add(txtTitle);
 		
 		JLabel lblTitle = new JLabel("Titol:");
-		lblTitle.setBounds(506, 178, 67, 20);
+		lblTitle.setBounds(506, 144, 67, 20);
 		contentPane.add(lblTitle);
 		
 		txtId = new JTextField();
 		txtId.setEnabled(false);
 		txtId.setColumns(10);
-		txtId.setBounds(541, 149, 86, 20);
+		txtId.setBounds(541, 115, 86, 20);
 		contentPane.add(txtId);
 		
 		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(506, 149, 67, 20);
+		lblId.setBounds(506, 115, 67, 20);
 		contentPane.add(lblId);
 		
 		txtNumPag = new JTextField();
 		txtNumPag.setEnabled(false);
 		txtNumPag.setColumns(10);
-		txtNumPag.setBounds(629, 331, 86, 20);
+		txtNumPag.setBounds(629, 297, 86, 20);
 		contentPane.add(txtNumPag);
 		
 		JLabel lblNumPag = new JLabel("Numero de paginas: ");
-		lblNumPag.setBounds(506, 331, 121, 20);
+		lblNumPag.setBounds(506, 297, 121, 20);
 		contentPane.add(lblNumPag);
 		
-		btnCrear = new JButton("Mandar");
+		btnCrear = new JButton("Crear");
 		btnCrear.setEnabled(false);
-		btnCrear.setBounds(506, 391, 89, 23);
+		btnCrear.setBounds(506, 357, 89, 23);
 		contentPane.add(btnCrear);
 		
 		JLabel lblSelectImage = new JLabel("Imatge de Portada: ");
-		lblSelectImage.setBounds(506, 361, 121, 20);
+		lblSelectImage.setBounds(506, 327, 121, 20);
 		contentPane.add(lblSelectImage);
 		
 		btnImageFile = new JButton("Seleccionar");
 		btnImageFile.setEnabled(false);
-		btnImageFile.setBounds(626, 361, 103, 23);
+		btnImageFile.setBounds(626, 327, 103, 23);
 		contentPane.add(btnImageFile);
 		
 		lblRoute = new JLabel("");
 		lblRoute.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblRoute.setBounds(733, 361, 140, 20);
+		lblRoute.setBounds(733, 327, 140, 20);
 		contentPane.add(lblRoute);
 		
 		btnLoadConnection = new JButton("Cargar Conexi\u00F3");
@@ -156,13 +159,24 @@ public class Vista extends JFrame {
 		contentPane.add(psfPassword);
 		
 		btnLogin = new JButton("Logejarse");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnLogin.setEnabled(false);
 		btnLogin.setBounds(263, 53, 103, 23);
 		contentPane.add(btnLogin);
+		
+		btnUpdate = new JButton("Actualitzar");
+		btnUpdate.setEnabled(false);
+		btnUpdate.setBounds(605, 358, 110, 23);
+		contentPane.add(btnUpdate);
+		
+		btnDeleteOne = new JButton("Esborrar");
+		btnDeleteOne.setEnabled(false);
+		btnDeleteOne.setBounds(721, 357, 89, 23);
+		contentPane.add(btnDeleteOne);
+		
+		btnDeleteAll = new JButton("Esborrar Coleccio");
+		btnDeleteAll.setEnabled(false);
+		btnDeleteAll.setBounds(565, 391, 164, 23);
+		contentPane.add(btnDeleteAll);
 		this.setVisible(true);
 	}
 
@@ -225,4 +239,18 @@ public class Vista extends JFrame {
 	public JButton getBtnLogin() {
 		return btnLogin;
 	}
+
+	public JButton getBtnUpdate() {
+		return btnUpdate;
+	}
+
+	public JButton getBtnDeleteOne() {
+		return btnDeleteOne;
+	}
+
+	public JButton getBtnDeleteAll() {
+		return btnDeleteAll;
+	}
+	
+	
 }
