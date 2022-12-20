@@ -1,6 +1,8 @@
 package es.florida.aev3;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.lt;
+import static com.mongodb.client.model.Filters.gt;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,9 +12,12 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
 import com.mongodb.MongoClient;
@@ -122,5 +127,39 @@ public class Modelo {
 	
 	public static void borrarColeecio() {
 		coleccionBooks.drop(); 
+	}
+	
+	public static String buscarEqual(int id) {
+		Bson query = eq("Id", id);
+		MongoCursor<Document> cursor = coleccionBooks.find(query).iterator();
+		String resultat = "";
+		while (cursor.hasNext()) {
+			resultat=cursor.next().toJson();
+		}
+		return resultat;
+	}
+	
+	public static List<String> buscarMenor(int id) {
+		Bson query = lt("Id", id);
+		MongoCursor<Document> cursor = coleccionBooks.find(query).iterator();
+		List<String> resultats = new ArrayList<String>();
+		String resultat = "";
+		while (cursor.hasNext()) {
+			resultat=cursor.next().toJson();
+			resultats.add(resultat);
+		}
+		return resultats;
+	}
+	
+	public static List<String> buscarMatjor(int id) {
+		Bson query = gt("Id", id);
+		MongoCursor<Document> cursor = coleccionBooks.find(query).iterator();
+		List<String> resultats = new ArrayList<String>();
+		String resultat = "";
+		while (cursor.hasNext()) {
+			resultat=cursor.next().toJson();
+			resultats.add(resultat);
+		}
+		return resultats;
 	}
 }

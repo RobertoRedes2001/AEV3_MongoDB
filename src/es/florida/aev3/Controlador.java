@@ -78,6 +78,14 @@ public class Controlador {
 				File imageFile = new File (vista.getLblRoute().getText());
 				modelo.crearBook(Integer.parseInt(vista.getTxtId().getText()), vista.getTxtTitle().getText(), vista.getTxtAuthor().getText(), Integer.parseInt(vista.getTxtAnyNax().getText()), Integer.parseInt(vista.getTxtAnyPub().getText()), vista.getTxtEditorial().getText(), Integer.parseInt(vista.getTxtNumPag().getText()), imageFile);
 				showMessageDialog(null, "Registre creat.");
+				vista.getTxtId().setText("");
+				vista.getTxtTitle().setText("");
+				vista.getTxtAuthor().setText("");
+				vista.getTxtAnyNax().setText("");
+				vista.getTxtAnyPub().setText(""); 
+				vista.getTxtEditorial().setText("");
+				vista.getTxtNumPag().setText("");
+				vista.getLblRoute().setText("");
 			}
 		};
 		vista.getBtnCrear().addActionListener(actionListener_CrearRegistre);
@@ -89,6 +97,14 @@ public class Controlador {
 					File imageFile = new File (vista.getLblRoute().getText());
 					modelo.actualitzarBook(Integer.parseInt(vista.getTxtId().getText()), vista.getTxtTitle().getText(), vista.getTxtAuthor().getText(), Integer.parseInt(vista.getTxtAnyNax().getText()), Integer.parseInt(vista.getTxtAnyPub().getText()), vista.getTxtEditorial().getText(), Integer.parseInt(vista.getTxtNumPag().getText()), imageFile);
 					showMessageDialog(null, "Registre actualitzat.");
+					vista.getTxtId().setText("");
+					vista.getTxtTitle().setText("");
+					vista.getTxtAuthor().setText("");
+					vista.getTxtAnyNax().setText("");
+					vista.getTxtAnyPub().setText(""); 
+					vista.getTxtEditorial().setText("");
+					vista.getTxtNumPag().setText("");
+					vista.getLblRoute().setText("");
 				}
 			}
 		};
@@ -100,6 +116,7 @@ public class Controlador {
 				if(JOptionPane.YES_OPTION==0) {
 					modelo.borrarBook(Integer.parseInt(vista.getTxtId().getText()));
 					showMessageDialog(null, "Registre esborrat.");
+					vista.getTxtId().setText("");
 				}
 			}
 		};

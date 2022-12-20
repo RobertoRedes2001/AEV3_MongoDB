@@ -13,6 +13,10 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
+import javax.swing.JEditorPane;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
 
 public class Vista extends JFrame {
 	
@@ -35,6 +39,8 @@ public class Vista extends JFrame {
 	private JButton btnUpdate;
 	private JButton btnDeleteOne;
 	private JButton btnDeleteAll;
+	private JButton btnSearch;
+	private JComboBox cmbQuery;
 
 	public Vista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,8 +181,28 @@ public class Vista extends JFrame {
 		
 		btnDeleteAll = new JButton("Esborrar Coleccio");
 		btnDeleteAll.setEnabled(false);
-		btnDeleteAll.setBounds(565, 391, 164, 23);
+		btnDeleteAll.setBounds(670, 391, 140, 23);
 		contentPane.add(btnDeleteAll);
+		
+		cmbQuery = new JComboBox();
+		cmbQuery.setModel(new DefaultComboBoxModel(new String[] {"-eq", "-lt", "-gt"}));
+		cmbQuery.setEnabled(false);
+		cmbQuery.setBounds(637, 114, 68, 21);
+		contentPane.add(cmbQuery);
+		
+		btnSearch = new JButton("Realiztar Busqueda");
+		btnSearch.setEnabled(false);
+		btnSearch.setBounds(506, 392, 140, 23);
+		contentPane.add(btnSearch);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 115, 468, 300);
+		contentPane.add(scrollPane);
+		
+		JEditorPane epHTML = new JEditorPane();
+		epHTML.setText("");
+		epHTML.setContentType("text/html");
+		scrollPane.setViewportView(epHTML);
 		this.setVisible(true);
 	}
 
@@ -251,6 +277,12 @@ public class Vista extends JFrame {
 	public JButton getBtnDeleteAll() {
 		return btnDeleteAll;
 	}
-	
-	
+
+	public JButton getBtnSearch() {
+		return btnSearch;
+	}
+
+	public JComboBox getCmbQuery() {
+		return cmbQuery;
+	}
 }
