@@ -200,8 +200,9 @@ public class Vista extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JEditorPane epHTML = new JEditorPane();
-		epHTML.setText("");
+		epHTML.setEditable(false);
 		epHTML.setContentType("text/html");
+		epHTML.setText("<HTML>\r\n\t<BODY>\r\n\t\t<TABLE border=1 align=center>\r\n\t\t\t<TR>\r\n\t\t\t\t<TH>ID</TH>\r\n\t\t\t\t<TH>TITOL</TH>\r\n\t\t\t\t<TH>AUTOR</TH>\r\n\t\t\t\t<TH>EDITORIAL</TH>\r\n\t\t\t</TR>\r\n\t\t</TABLE>\r\n\t</BODY> \r\n</HTML>");
 		scrollPane.setViewportView(epHTML);
 		this.setVisible(true);
 	}

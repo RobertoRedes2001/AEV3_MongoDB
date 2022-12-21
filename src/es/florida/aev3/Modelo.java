@@ -3,8 +3,12 @@ package es.florida.aev3;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.lt;
 import static com.mongodb.client.model.Filters.gt;
+import static com.mongodb.client.model.Filters.and;
+import com.mongodb.client.model.Filters;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,6 +18,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bson.Document;
@@ -94,6 +100,17 @@ public class Modelo {
 		return img64;
 	}
 	
+	public static BufferedImage convertirImg(String base64) {
+		BufferedImage imatge = null;
+		try {
+			byte[] btDataFile = Base64.decodeBase64(base64);
+			imatge = ImageIO.read(new ByteArrayInputStream(btDataFile));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return imatge;
+	}
+	
 	public static void crearBook(int id, String title, String autor, int any, int nax, String editorial, int pags, File img) {
 		Document doc = new Document();
 		doc.append("Id", id);
@@ -139,16 +156,28 @@ public class Modelo {
 		return resultat;
 	}
 	
-	public static List<String> buscarMenor(int id) {
+	public static String buscarMenor(int id) {
 		Bson query = lt("Id", id);
 		MongoCursor<Document> cursor = coleccionBooks.find(query).iterator();
-		List<String> resultats = new ArrayList<String>();
-		String resultat = "";
+		JSONObject book;
+		List<String> rows = new ArrayList<String>();
+		String row="";
 		while (cursor.hasNext()) {
-			resultat=cursor.next().toJson();
-			resultats.add(resultat);
+			  book = new JSONObject(cursor.next().toJson());
+			  row = "<TR><TD>"+book.getInt("Id")+"</TD><TD>"+book.getString("Titulo")+"</TD><TD>"+book.getString("Autor")+
+					  "</TD><TD>"+book.getInt("Anyo_nacimiento")+"</TD><TD>"+book.getInt("Anyo_publicacion")+"</TD><TD>"
+					  +book.getString("Editorial")+"</TD><TD>"+book.getInt("Numero_paginas")+"</TD><TD>"
+					  +"</TD><TD>"+convertirImg(book.getString("Thumbnail"))+"</TD><TD>"+"</TD></TR>";
+			  rows.add(row);
 		}
-		return resultats;
+		String head = "\"<HTML><BODY><TABLE border=1 align=center><TR><TH>ID</TH><TH>TITOL</TH><TH>AUTOR</TH><TH>ANY DE NAIXMENT</TH><TH>ANY DE PUBLICACIO</TH><TH>EDITORIAL</TH><TH>PAGINES</TH><TH>PORTADA</TH></TR>\"";
+		String close = "</TABLE></BODY></HTML>";
+		String table = head;
+		for (String r : rows) {
+			table+=r;
+		}
+		table+=close;
+		return table;
 	}
 	
 	public static List<String> buscarMatjor(int id) {
