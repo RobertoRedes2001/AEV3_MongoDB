@@ -41,10 +41,12 @@ public class Vista extends JFrame {
 	private JButton btnDeleteAll;
 	private JButton btnSearch;
 	private JComboBox cmbQuery;
+	private JEditorPane epHTML;
+	private JLabel lblThumbnail;
 
 	public Vista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 897, 480);
+		setBounds(100, 100, 926, 480);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -192,18 +194,22 @@ public class Vista extends JFrame {
 		
 		btnSearch = new JButton("Realiztar Busqueda");
 		btnSearch.setEnabled(false);
-		btnSearch.setBounds(506, 392, 140, 23);
+		btnSearch.setBounds(506, 392, 154, 23);
 		contentPane.add(btnSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 115, 468, 300);
 		contentPane.add(scrollPane);
 		
-		JEditorPane epHTML = new JEditorPane();
+		epHTML = new JEditorPane();
 		epHTML.setEditable(false);
 		epHTML.setContentType("text/html");
-		epHTML.setText("<HTML>\r\n\t<BODY>\r\n\t\t<TABLE border=1 align=center>\r\n\t\t\t<TR>\r\n\t\t\t\t<TH>ID</TH>\r\n\t\t\t\t<TH>TITOL</TH>\r\n\t\t\t\t<TH>AUTOR</TH>\r\n\t\t\t\t<TH>EDITORIAL</TH>\r\n\t\t\t</TR>\r\n\t\t</TABLE>\r\n\t</BODY> \r\n</HTML>");
+		epHTML.setText("");
 		scrollPane.setViewportView(epHTML);
+		
+		lblThumbnail = new JLabel("");
+		lblThumbnail.setBounds(733, 115, 140, 198);
+		contentPane.add(lblThumbnail);
 		this.setVisible(true);
 	}
 
@@ -286,4 +292,13 @@ public class Vista extends JFrame {
 	public JComboBox getCmbQuery() {
 		return cmbQuery;
 	}
+
+	public JEditorPane getEpHTML() {
+		return epHTML;
+	}
+
+	public JLabel getLblThumbnail() {
+		return lblThumbnail;
+	}
+
 }
