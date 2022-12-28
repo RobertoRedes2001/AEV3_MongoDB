@@ -44,6 +44,10 @@ public class Modelo {
 		
 	}
 	
+	
+	/**
+	 * Conecta a base de dades
+	 */
 	public static void conectarDDBB() {
 		File archivo = new File("conexionDDBB.json");
 		try {
@@ -62,6 +66,11 @@ public class Modelo {
 		}
 	}
 	
+	/**
+	 * Obtenim l'imatge de portada de la BBDD
+	 * @param id
+	 * @return
+	 */
 	public static String getImg(int id) {
 		
 		Bson query = eq("Id", id);
@@ -75,6 +84,13 @@ public class Modelo {
 		return img;
 	}
 	
+	/**
+	 * Reescalar la portada que es visualitza
+	 * @param id
+	 * @param wid
+	 * @param heig
+	 * @return
+	 */
 	public static ImageIcon convertirImg(int id, int wid, int heig) {
 		Bson query = eq("Id", id);
 		MongoCursor<Document> cursor = coleccionBooks.find(and(Filters.exists("Anyo_nacimiento"), query)).iterator();
@@ -95,7 +111,11 @@ public class Modelo {
 		}
 		return imatgeIcona;
 	}
-	
+	/**
+	 * Codificar la contrasenya
+	 * @param password
+	 * @return
+	 */
 	public static String codificarPass(String password) {
 		MessageDigest md = null;
 		try {
@@ -112,7 +132,12 @@ public class Modelo {
 		}
 		return sb.toString();
 	}
-	
+	/**
+	 * Validacio d'usuari i contrasenya
+	 * @param usu
+	 * @param contra
+	 * @return
+	 */
 	public static boolean comprobarUsers(String usu, String contra) {
 		
 		MongoCursor<Document> cursor = coleccionUsers.find().iterator();
@@ -124,7 +149,11 @@ public class Modelo {
 		}
 		return false;
 	}
-	
+	/**
+	 * Convertir una imatge a Base64 per a posarla a la BBDD
+	 * @param img
+	 * @return
+	 */
 	public static String convertirBase64(File img) {
 		String img64 = "";
 		try {
@@ -136,7 +165,17 @@ public class Modelo {
 		return img64;
 	}
 	
-	
+	/**
+	 * Insertar un registre a la BBDD
+	 * @param id
+	 * @param title
+	 * @param autor
+	 * @param any
+	 * @param nax
+	 * @param editorial
+	 * @param pags
+	 * @param img
+	 */
 	public static void crearBook(int id, String title, String autor, int any, int nax, String editorial, int pags, File img) {
 		Document doc = new Document();
 		doc.append("Id", id);
@@ -149,7 +188,17 @@ public class Modelo {
 		doc.append("Thumbnail", convertirBase64(img));
 		coleccionBooks.insertOne(doc);
 	}
-	
+	/**
+	 * Actualitzar un registre a la BBDD
+	 * @param id
+	 * @param title
+	 * @param autor
+	 * @param any
+	 * @param nax
+	 * @param editorial
+	 * @param pags
+	 * @param img
+	 */
 	public static void actualitzarBook(int id, String title, String autor, int any, int nax, String editorial, int pags, File img) {
 		Document doc = new Document();
 		doc.append("Id", id);
@@ -163,15 +212,48 @@ public class Modelo {
 		coleccionBooks.updateOne(eq("Id", id), new Document("$set",
 				new Document(doc)));
 	}
-	
+	/**
+	 * Borrar un registre a la BBDD
+	 * @param id
+	 */
 	public static void borrarBook(int id) {
 		coleccionBooks.deleteOne(eq("Id", id)); 
 	}
-	
+	/**
+	 * Borrar la coleccio de la BBDD
+	 */
 	public static void borrarColeecio() {
 		coleccionBooks.drop(); 
 	}
-	
+	/**
+	 * Tabla per defecte que es mostra al programa amb l'informacio basica.
+	 * @return
+	 */
+	public static String defaultSearch() {
+		MongoCursor<Document> cursor = coleccionBooks.find().iterator();
+		JSONObject book;
+		List<String> rows = new ArrayList<String>();
+		String row = "";
+		while (cursor.hasNext()) {
+			book = new JSONObject(cursor.next().toJson());
+			row = "<TR><TD>" + book.getInt("Id") + "</TD><TD>" + book.getString("Titulo") + "</TD><TD>"
+					+ book.getString("Autor") + "</TD></TR>";
+			rows.add(row);
+		}
+		String head = "<HTML><BODY><TABLE border=1 align=center><TR><TH>ID</TH><TH>TITOL</TH><TH>AUTOR</TH></TR>";
+		String close = "</TABLE></BODY></HTML>";
+		String table = head;
+		for (String r : rows) {
+			table += r;
+		}
+		table += close;
+		return table;
+	}
+	/**
+	 * Fer una busqueda de tipus Equal.
+	 * @param id
+	 * @return
+	 */
 	public static String buscarEqual(int id) {
 		Bson query = eq("Id", id);
 		MongoCursor<Document> cursor = coleccionBooks.find(and(Filters.exists("Anyo_nacimiento"), query)).iterator();
@@ -195,28 +277,11 @@ public class Modelo {
 		table += close;
 		return table;
 	}
-	
-	public static String defaultSearch() {
-		MongoCursor<Document> cursor = coleccionBooks.find().iterator();
-		JSONObject book;
-		List<String> rows = new ArrayList<String>();
-		String row = "";
-		while (cursor.hasNext()) {
-			book = new JSONObject(cursor.next().toJson());
-			row = "<TR><TD>" + book.getInt("Id") + "</TD><TD>" + book.getString("Titulo") + "</TD><TD>"
-					+ book.getString("Autor") + "</TD></TR>";
-			rows.add(row);
-		}
-		String head = "<HTML><BODY><TABLE border=1 align=center><TR><TH>ID</TH><TH>TITOL</TH><TH>AUTOR</TH></TR>";
-		String close = "</TABLE></BODY></HTML>";
-		String table = head;
-		for (String r : rows) {
-			table += r;
-		}
-		table += close;
-		return table;
-	}
-	
+	/**
+	 * Fer una busqueda de tipus Less Than.
+	 * @param id
+	 * @return
+	 */
 	public static String buscarMenor(int id) {
 		Bson query = lt("Id", id);
 		MongoCursor<Document> cursor = coleccionBooks.find(and(Filters.exists("Anyo_nacimiento"), query)).iterator();
@@ -240,7 +305,11 @@ public class Modelo {
 		table += close;
 		return table;
 	}
-	
+	/**
+	 * Fer una busqueda de tipus Greater Than.
+	 * @param id
+	 * @return
+	 */
 	public static String buscarMatjor(int id) {
 		Bson query = gt("Id", id);
 		MongoCursor<Document> cursor = coleccionBooks.find(and(Filters.exists("Anyo_nacimiento"), query)).iterator();

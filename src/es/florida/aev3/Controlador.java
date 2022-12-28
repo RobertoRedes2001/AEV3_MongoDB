@@ -21,6 +21,11 @@ public class Controlador {
 	actionListener_Login, actionListener_EsborrarRegistre,actionListener_ActualitzarRegistre,actionListener_EsborrarColeccio,
 	actionListener_Busqueda;
 	
+	/**
+	 * Constructor de Controlador
+	 * @param m
+	 * @param v
+	 */
 	Controlador(Modelo m, Vista v){
 		this.modelo=m;
 		this.vista=v;
@@ -66,6 +71,9 @@ public class Controlador {
 		};
 		vista.getBtnLogin().addActionListener(actionListener_Login);
 		
+		/**
+		 * Obrim un FileChooser per a seleccionar una imatge 
+		 */
 		actionListener_SeleccionarImatge = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser seleccion = new JFileChooser();
@@ -78,6 +86,7 @@ public class Controlador {
 			}
 		};
 		vista.getBtnImageFile().addActionListener(actionListener_SeleccionarImatge);
+		
 		actionListener_CrearRegistre = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File imageFile = new File (vista.getLblRoute().getText());
@@ -150,7 +159,12 @@ public class Controlador {
 		};
 		vista.getBtnDeleteAll().addActionListener(actionListener_EsborrarColeccio);
 		
+		/**
+		 * Despleguem un ComboBox desde el cual seleccionem el tipus de consulta.
+		 * En base al valor seleccionat mostrara una consulta u otra.
+		 */
 		actionListener_Busqueda = new ActionListener() {
+			@SuppressWarnings("static-access")
 			public void actionPerformed(ActionEvent e) {
 				int pick = vista.getCmbQuery().getSelectedIndex()+1;
 				switch(pick) {
