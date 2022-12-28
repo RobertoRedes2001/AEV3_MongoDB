@@ -62,9 +62,22 @@ public class Modelo {
 		}
 	}
 	
-	public static ImageIcon convertirImg(int id, int wid, int heig) {
+	public static String getImg(int id) {
+		
 		Bson query = eq("Id", id);
 		MongoCursor<Document> cursor = coleccionBooks.find(Filters.exists("Anyo_nacimiento")).iterator();
+		JSONObject book;
+		String img="";
+		while (cursor.hasNext()) {
+			book = new JSONObject(cursor.next().toJson());
+			img = book.getString("Thumbnail");
+		}
+		return img;
+	}
+	
+	public static ImageIcon convertirImg(int id, int wid, int heig) {
+		Bson query = eq("Id", id);
+		MongoCursor<Document> cursor = coleccionBooks.find(and(Filters.exists("Anyo_nacimiento"), query)).iterator();
 		JSONObject book;
 		ImageIcon imatgeIcona=null;
 		while (cursor.hasNext()) {
@@ -77,7 +90,6 @@ public class Modelo {
 				imatgeIcona = new ImageIcon(dimg); 
 				return imatgeIcona;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
