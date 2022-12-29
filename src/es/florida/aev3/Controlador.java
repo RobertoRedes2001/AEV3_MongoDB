@@ -15,6 +15,11 @@ import es.florida.aev3.Modelo;
 import es.florida.aev3.Vista;
 
 public class Controlador {
+	/**
+	 * 
+	 * @author Borja_Zafra**Roberto_Martínez
+	 *
+	 */
 	private Modelo modelo;
 	private Vista vista;
 	private ActionListener actionListener_CrearRegistre, actionListener_SeleccionarImatge,actionListener_CargarConexio,

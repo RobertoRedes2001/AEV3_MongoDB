@@ -19,7 +19,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 
 public class Vista extends JFrame {
-	
+	/**
+	 * 
+	 * @author Borja_Zafra**Roberto_Martínez
+	 *
+	 */
 	//Declarar interfaz
 	private JPanel contentPane;
 	private JTextField txtAnyNax;

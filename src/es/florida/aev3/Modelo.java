@@ -34,7 +34,11 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class Modelo {
-	
+	/**
+	 * 
+	 * @author Borja_Zafra**Roberto_Martínez
+	 *
+	 */
 	private static MongoClient mongoClient;
 	private static MongoDatabase database;
 	private static MongoCollection<Document> coleccionBooks;
